@@ -5,6 +5,7 @@ import ntpath
 import subprocess
 from subprocess import Popen, PIPE, STDOUT
 from sys import version_info
+import datetime
 
 def get_setting(key, default=None):
 	settings = sublime.load_settings('FiddlerInjector.sublime-settings')
@@ -60,10 +61,14 @@ class FiddlerInjectorCommand():
 
 		doc = minidom.Document()
 		doc.toprettyxml(encoding="utf-8")
-		root = doc.createElement('State')
-		root.setAttribute('Enabled', 'true')
-		root.setAttribute('Fallthrough', 'true')
-		root.setAttribute('UseLatency', 'true')
+		root = doc.createElement('AutoResponder')
+		root.setAttribute('FiddlerVersion', '4.6.3.44034')
+		root.setAttribute('LastSave', 'hol')
+		state = doc.createElement('State')
+		state.setAttribute('Enabled', 'true')
+		state.setAttribute('Fallthrough', 'true')
+		state.setAttribute('UseLatency', 'true')
+		root.appendChild(state)
 		doc.appendChild(root)
 		for file in files:
 			regexMatch = []
@@ -71,7 +76,7 @@ class FiddlerInjectorCommand():
 			origPath.append(path)
 			origPath.append('\\')
 			origPath.append(file)
-			regexMatch.append('regex:(?inx)http:')
+			regexMatch.append('EXACT:http://')
 			regexMatch.append(settings.get('DOMAIN'))
 			regexMatch.append(':')
 			regexMatch.append(settings.get('PORT'))
@@ -80,15 +85,16 @@ class FiddlerInjectorCommand():
 			regexMatch.append('/')
 			if(isCGT):
 				regexMatch.append('cgt')
-				regexMatch.append('|')
+				regexMatch.append('/')
 				regexMatch.append(cgtName)
 			regexMatch.append('/')
 			regexMatch.append(self.get_file_name(file))
 			tempChild = doc.createElement('ResponseRule')
+			tempChild.setAttribute('Enabled', 'true')
 			tempChild.setAttribute('Match', ''.join(regexMatch))
 			tempChild.setAttribute('Action', ''.join(origPath))
-			tempChild.setAttribute('Enabled', 'true')
-			root.appendChild(tempChild)
+
+			state.appendChild(tempChild)
 		sublime.message_dialog('<::::::jol::::>'+doc.toxml()+'----')
 		return doc
 	def create_fiddler(self, path,  parameters, cntName, isCGT, cgtName):
