@@ -1,0 +1,5 @@
+[{
+  "id": "FiddlerInjector",
+  "caption": "Add file/folder(ctrl, model, service, view) to Fiddler",
+  "command": "append"
+}]
