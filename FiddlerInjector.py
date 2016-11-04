@@ -42,23 +42,18 @@ class FiddlerInjectorCommand():
 		for content in os.listdir(path):
 			if(self.validateFiles(content)):
 				arr.append(content)
-		sublime.message_dialog('<::::::FILES IS::::>'.join(arr)+'----')
 	def validateFiles(self, file):
 		settings = sublime.load_settings('FiddlerInjector.sublime-settings')
-
 		if re.match(settings.get('ignore'), file, flags=0):
 			return False
 		if re.match(settings.get('append'), file, flags=0):
 			return True
-
 		return False
 	def get_file_name(self, path):
 		head, tail = ntpath.split(path)
 		return tail or ntpath.basename(head)
-
 	def generateXMLstr(self, files, cntName, isCGT, cgtName, path):
 		settings = sublime.load_settings('FiddlerInjector.sublime-settings')
-
 		doc = minidom.Document()
 		doc.toprettyxml(encoding="utf-8")
 		root = doc.createElement('AutoResponder')
@@ -93,12 +88,9 @@ class FiddlerInjectorCommand():
 			tempChild.setAttribute('Enabled', 'true')
 			tempChild.setAttribute('Match', ''.join(regexMatch))
 			tempChild.setAttribute('Action', ''.join(origPath))
-
 			state.appendChild(tempChild)
-		sublime.message_dialog('<::::::jol::::>'+doc.toxml()+'----')
 		return doc
 	def create_fiddler(self, path,  parameters, cntName, isCGT, cgtName):
-
 		try:
 			if not path:
 				raise NotFoundError('The file open in the selected view has ' +
@@ -116,7 +108,6 @@ class FiddlerInjectorCommand():
 				self.appendFiles(files, path)
 
 			args.extend(parameters)
-			sublime.message_dialog('<::::::jol::::>'.join(files)+'----')
 			xml = self.generateXMLstr(files, cntName, isCGT, cgtName, path)
 			nameXML = []
 			nameXML.append(settings.get('saveOn'))
@@ -155,9 +146,3 @@ class FileFiddlerInjectorCommand(sublime_plugin.WindowCommand, FiddlerInjectorCo
             "Name of CNT is: ", fname, done, None, None)
 		else:
 			self.create_fiddler(paths[0], parameters, name, isCGT, name)
-
-
-
-
-
-
