@@ -127,15 +127,10 @@ class FiddlerInjectorCommand():
 
 class FileFiddlerInjectorCommand(sublime_plugin.WindowCommand, FiddlerInjectorCommand):
 	def run(self, paths=[], parameters=None):
-		sublime.message_dialog('<::::::jol::::>'+paths[0]+'----')
 		isCGT, name = self.getCnt_cgt_info(paths[0])
 		fname = self.window.active_view().file_name()
 		if fname == None:
 			fname = ""
-		if isCGT:
-			sublime.message_dialog('<::::::jol::::>CGT----')
-		else:
-			sublime.message_dialog('<::::::jol::::>CNT----')
 		def done(cntName):
 				self.create_fiddler(paths[0], parameters, cntName, isCGT, name)
 		if parameters is None:
