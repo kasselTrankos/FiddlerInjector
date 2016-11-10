@@ -3,7 +3,7 @@
 	// On OS X the terminal can be set to iTerm.sh to execute iTerm
 	"fiddlerInjector": "",
 	"append":".*_controller.js|.*_service.js|.*_model.js||.*_directive.js|.*_view.html",
-	"ignore":"css|test|js|lang|java|img|WEB-INF|cnt.js|enum",
+	"ignore":"css|test|js|lang|java|img|WEB-INF|cnt.js|enum|min",
 	"saveOn":"C:\\Users\\usuario.CAÑIZO\\Documents\\Fiddler2\\Captures",
 	"parameters": [],
 	"DOMAIN" : "localhost",
