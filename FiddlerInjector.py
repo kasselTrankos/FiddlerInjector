@@ -77,8 +77,8 @@ class FiddlerInjectorCommand():
 			regexMatch.append(settings.get('PORT'))
 			regexMatch.append('/')
 			regexMatch.append(cntName)
-			regexMatch.append('/')
 			if(isCGT):
+				regexMatch.append('/')
 				regexMatch.append('cgt')
 				regexMatch.append('/')
 				regexMatch.append(cgtName)
@@ -136,8 +136,6 @@ class FileFiddlerInjectorCommand(sublime_plugin.WindowCommand, FiddlerInjectorCo
 		if parameters is None:
 			parameters = get_setting('parameters', [])
 
-		if(isCGT):
-			self.window.show_input_panel(
-            "Name of CNT is: ", fname, done, None, None)
-		else:
-			self.create_fiddler(paths[0], parameters, name, isCGT, name)
+
+		self.window.show_input_panel(
+        "Name of CNT is: ", fname, done, None, None)
